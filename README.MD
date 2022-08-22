@@ -1,4 +1,4 @@
-<h1 align="center">Yamager - Simple module for parsing images from Yandex.</h1>
+<h1 align="center">Yamager - Simple module for parsing images from Yandex and Google.</h1>
 
 <br>
 
@@ -8,7 +8,14 @@
 import yamager as yimg
 from random import choice
 
-images = yimg.searchImages('anime') #get image previews
+############Yandex Images############
+images = yimg.searchYandexImages('anime') #get image previews
 previews = choice(images) #get previews of random image
 print(yimg.getBestImage(previews)) #get best image of previews with high resolution
+#####################################
+
+############Google Images############
+images = yimg.searchGoogleImages('anime')
+print(choice(images)) #get random image from search
+#####################################
 ```
