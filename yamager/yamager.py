@@ -20,7 +20,7 @@ def getBestImage(previews):
 def searchYandexImages(search):
 	previews = []
 
-	tree = html.fromstring(get(f'https://yandex.net/images/search?text={search}', headers=headers).content)
+	tree = html.fromstring(get(f'https://yandex.ru/images/search?text={search}', headers=headers).content)
 
 	images = tree.xpath('//div[contains(@class, \'serp-item\')]')
 	for image in images:
@@ -32,13 +32,13 @@ def searchYandexImages(search):
 
 def searchGoogleImages(search):
 	images = []
-	tree = html.fromstring(get(f'https://google.com/search?q={search}&tbm=isch', headers=headers).content)
+	tree = html.fromstring(get(f'https://google.com/search?q={search}&tbm=isch&tbs=qdr:w,isz:l', headers=headers).content)
 	scripts = tree.xpath('//script/text()')
 	for script in scripts:
-		if 'Size' in script:
-			trash = findall("https?://\S+?\.(?:jpg|jpeg|gif|png|webp)", script)
-			for arg in trash:
-				dem = arg.split(',["')
-				images.append(dem[len(dem) - 1])
+		trash = findall("https?://\S+?\.(?:jpg|jpeg|gif|png|webp)", script)
+		for arg in trash:
+			dem = arg.split(',["')
+			images.append(dem[len(dem) - 1])
+		if len(trash) > 0:
 			break
 	return images

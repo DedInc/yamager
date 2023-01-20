@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='yamager',
-    version='1.0.1',
+    version='1.0.2',
     author='Maehdakvan',
     author_email='visitanimation@google.com',
     description='Yamager - Simple module for parsing images from Yandex and Google.',
