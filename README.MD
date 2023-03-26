@@ -5,17 +5,31 @@
 <h1 align="center"> -How to use?- </h1>
 
 ```python
-import yamager as yimg
-from random import choice
+from yamager import Yamager
+import random
+
+yamager = Yamager()
 
 ############Yandex Images############
-images = yimg.searchYandexImages('anime') #get image previews
-previews = choice(images) #get previews of random image
-print(yimg.getBestImage(previews)) #get best image of previews with high resolution
+images = yamager.search_yandex_images('anime') #get image previews
+previews = random.choice(images) #get previews of random image
+print(yamager.get_best_image(previews)) #get best image of previews with high resolution
+#####################################
+
+############Yandex Images with ZenRows bypasser############
+images = yamager.search_yandex_images('anime', zenrows='API_KEY')
+previews = random.choice(images)
+print(yamager.get_best_image(previews))
+#####################################
+
+############Yandex Images pages############
+images = yamager.search_yandex_images('anime', page=30)
+previews = random.choice(images)
+print(yamager.get_best_image(previews))
 #####################################
 
 ############Google Images############
-images = yimg.searchGoogleImages('anime')
-print(choice(images)) #get random image from search
+images = yamager.search_google_images('anime')
+print(random.choice(images)) #get random image from search
 #####################################
 ```
