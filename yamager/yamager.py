@@ -7,19 +7,23 @@ class Yamager:
 
     def __init__(self):
         self.agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
-        self.headers = {'User-Agent': self.agent}
+        self.headers = {'User-Agent': self.agent, 'Cookie': 'yp=1711521583.sp.bhtt:0:brl:0:family:0:pgtr:0'}
 
     @staticmethod
     def get_best_image(previews):
-        sizes = []
-        urls = []
+        max_size = 0
+        best_url = ''
         for preview in previews:
-            sizes.append(preview['w'] + preview['h'])
+            size = preview['w'] + preview['h']
             url = preview['url']
+
             if url.startswith('//'):
                 url = 'https:' + url
-            urls.append(url)
-        return urls[sizes.index(max(sizes))]
+
+            if max_size < size:
+                max_size = size
+                best_url = url
+        return best_url
 
     def search_yandex_images(self, search, page=1, zenrows=None):
         previews = []
@@ -27,10 +31,7 @@ class Yamager:
         if zenrows is None:
             response = requests.get(f'https://yandex.ru/images/search?text={search}&p={page}', headers=self.headers).content
         else:
-            response = requests.get(f'https://api.zenrows.com/v1/?apikey={zenrows}&url=https://yandex.ru/images/search?text={search}&p={page}&js_render=true&window_width=1366&window_height=768').content
-
-        with open('a.html', 'wb') as f:
-        	f.write(response)
+            response = requests.get(f'https://api.zenrows.com/v1/?apikey={zenrows}&url=https://yandex.ru/images/search?text={search}&p={page}&js_render=true&window_width=1920&window_height=1080&custom_headers=true', headers=self.headers).content
 
         tree = html.fromstring(response)
         images = tree.xpath('//div[contains(@class, \'serp-item\')]')
